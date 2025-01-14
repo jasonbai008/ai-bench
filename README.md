@@ -1,6 +1,6 @@
-# aibench
+# AI Bench
 
-AI 生成代码工作台，适用于Cursor编辑器
+AI 生成代码工作台，适用于 [Cursor](https://www.cursor.com/) 编辑器
 
 ## 全局指令配置
 
