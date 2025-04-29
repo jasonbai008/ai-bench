@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue 3 SFC Playground</title>
+    <!-- 修改 Element Plus 的样式和脚本引入 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-plus@2.3.14/dist/index.css">
+
+    <!-- 引入 Vue 3 -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+
+    <!-- 引入 Element Plus -->
+    <script src="https://unpkg.com/element-plus@2.3.14/dist/index.full.min.js"></script>
+
+    <!-- 引入 CodeMirror 编辑器 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.62.0/lib/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.62.0/theme/monokai.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/codemirror@5.62.0/lib/codemirror.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/codemirror@5.62.0/mode/vue/vue.min.js"></script>
+
+    <!-- 引入字体图标 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css">
+
+    <!-- 添加 Element Plus 基础样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css">
+
+    <!-- 添加基础样式 -->
+    <style>
+        /* 保持原有样式不变 */
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        /* 头部样式 */
+        .header {
+            height: 60px;
+            background: #35495e;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            justify-content: space-between;
+        }
+
+        .header h1 {
+            font-size: 22px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            color: #fff;
+            margin: 0;
+        }
+
+        .header h1 i {
+            margin-right: 10px;
+            font-size: 24px;
+            color: #42b983;
+        }
+
+        /* 主体内容样式 */
+        .main-container {
+            display: flex;
+            height: calc(100vh - 60px);
+            background-color: #fff;
+            overflow: hidden;
+        }
+
+        /* 编辑器区域 */
+        .editor-container {
+            flex: 1;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            background-color: #1e1e1e;
+            overflow: hidden;
+        }
+
+        .editor-header {
+            height: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 10px;
+            background: #2d2d2d;
+        }
+
+        .editor-header h2 {
+            font-size: 14px;
+            color: #2c3e50;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            margin: 0;
+            color: #fff;
+        }
+
+        .editor-wrapper {
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .CodeMirror {
+            height: 100%;
+            font-family: Consolas, Monaco, monospace;
+            font-size: 14px;
+            background: #1e1e1e !important;
+        }
+
+        /* 预览区域 */
+        .preview-container {
+            flex: 1;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border-left: 1px solid #ddd;
+        }
+
+        .preview-header {
+            height: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 10px;
+            background: #f5f7fa;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .preview-header h2 {
+            font-size: 14px;
+            color: #2c3e50;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            margin: 0;
+        }
+
+        .preview-wrapper {
+            flex: 1;
+            padding: 20px;
+            overflow: auto;
+        }
+
+        /* 按钮样式 */
+        .el-button {
+            height: 32px;
+            padding: 0 16px;
+            font-size: 13px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-weight: 500;
+        }
+
+        /* 运行按钮样式 */
+        .el-button--primary {
+            background: linear-gradient(45deg, #42b983, #3eaf7c);
+            border: none;
+            box-shadow: 0 2px 6px rgba(66, 185, 131, 0.2);
+        }
+
+        .el-button--primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(66, 185, 131, 0.3);
+            background: linear-gradient(45deg, #3eaf7c, #42b983);
+        }
+
+        .el-button--primary:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(66, 185, 131, 0.2);
+        }
+
+        /* 重置按钮样式 */
+        .el-button--default {
+            border: 1px solid #dcdfe6;
+            background: #ffffff;
+            color: #606266;
+        }
+
+        .el-button--default:hover {
+            color: #42b983;
+            border-color: #42b983;
+            background-color: #f0f9f4;
+        }
+
+        .el-button [class*="fa-"] {
+            font-size: 14px;
+        }
+
+        /* 编辑器操作按钮组 */
+        .editor-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* 编辑器图标 */
+        .editor-header i,
+        .preview-header i {
+            margin-right: 6px;
+            font-size: 14px;
+        }
+
+        /* 错误提示 */
+        .error-message {
+            color: #e74c3c;
+            margin-top: 15px;
+            padding: 12px;
+            background-color: #fef0f0;
+            border-radius: 6px;
+            border: 1px solid #f5c6cb;
+            border-left: 4px solid #e74c3c;
+            box-shadow: 0 2px 8px rgba(231, 76, 60, 0.1);
+        }
+
+        /* 版本标签样式 */
+        .version-badge {
+            background: #42b983;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .version-badge i {
+            margin-right: 5px;
+        }
+
+        /* Element UI 标识样式 */
+        .element-plus-tag {
+            display: inline-flex;
+            align-items: center;
+            margin-right: 10px;
+            padding: 4px 8px;
+            background: #95d475;
+            border: 1px solid #95d475;
+            border-radius: 4px;
+            color: white;
+            font-size: 12px;
+            box-shadow: 0 2px 4px rgba(103, 194, 58, 0.2);
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+            }
+
+            .editor-container,
+            .preview-container {
+                width: 100%;
+                height: 50vh;
+            }
+
+            .editor-container {
+                border-right: none;
+                border-bottom: 1px solid #c0c4cc;
+            }
+        }
+
+        /* 添加全屏样式 */
+        .preview-container.fullscreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1000;
+            background: white;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* 全屏按钮样式 */
+        .el-button--fullscreen {
+            background: transparent;
+            border: 1px solid #dcdfe6;
+            color: #606266;
+            transition: all 0.3s ease;
+        }
+
+        .el-button--fullscreen:hover {
+            background: #f5f7fa;
+            border-color: #c0c4cc;
+            color: #42b983;
+        }
+
+        .el-button--fullscreen:active {
+            background: #e6e9ed;
+        }
+
+        /* 全屏状态下的按钮样式 */
+        .preview-container.fullscreen .el-button--fullscreen {
+            background: #f5f7fa;
+            border-color: #c0c4cc;
+            color: #42b983;
+        }
+
+        /* 按钮图标动画 */
+        .el-button--fullscreen i {
+            transition: transform 0.3s ease;
+        }
+
+        .preview-container.fullscreen .el-button--fullscreen i {
+            transform: rotate(180deg);
+        }
+
+        /* 调整按钮组间距 */
+        .preview-header>div {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 先加载 Vue -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+
+    <!-- 再加载 Element Plus -->
+    <script src="https://unpkg.com/element-plus@2.3.14/dist/index.full.min.js"></script>
+
+    <!-- 最后加载 vue3-sfc-loader -->
+    <script src="https://unpkg.com/vue3-sfc-loader@0.8.4/dist/vue3-sfc-loader.js"></script>
+
+    <div id="app">
+        <!-- 保持原有模板结构 -->
+        <div>
+            <!-- 头部 -->
+            <div class="header">
+                <h1><i class="fab fa-vuejs"></i> Vue 3.x SFC Playground</h1>
+                <div class="version-info">
+                    <span class="version-badge"><i class="fas fa-code-branch"></i> Vue 3.3.4</span>
+                </div>
+            </div>
+
+            <!-- 主体内容 -->
+            <div class="main-container">
+                <!-- 编辑器区域 -->
+                <div class="editor-container">
+                    <div class="editor-header">
+                        <h2><i class="fas fa-code"></i> 编辑器</h2>
+                        <div class="editor-actions">
+                            <el-button type="primary" @click="updatePreview">
+                                <i class="fas fa-play"></i> 运行
+                            </el-button>
+                            <el-button @click="resetEditor">
+                                <i class="fas fa-redo"></i> 重置
+                            </el-button>
+                        </div>
+                    </div>
+                    <div class="editor-wrapper" ref="editorContainer"></div>
+                </div>
+
+                <!-- 预览区域 -->
+                <div class="preview-container" :class="{ 'fullscreen': isFullscreen }">
+                    <div class="preview-header">
+                        <h2><i class="fas fa-play-circle"></i> 预览</h2>
+                        <div style="display: flex; align-items: center;">
+                            <span class="element-plus-tag">
+                                Element Plus
+                            </span>
+                            <el-button class="el-button--fullscreen" @click="toggleFullscreen">
+                                <i class="fas fa-expand"></i>
+                                {{ isFullscreen ? '退出全屏' : '全屏' }}
+                            </el-button>
+                        </div>
+                    </div>
+                    <div class="preview-wrapper">
+                        <div ref="previewContainer"></div>
+                        <div v-if="error" class="error-message">
+                            <p><strong><i class="fas fa-exclamation-triangle"></i> 错误:</strong> {{ error }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 使用官网推荐的全局变量访问方式
+        const { loadModule } = window['vue3-sfc-loader'] || {};
+
+        // 添加详细的加载状态检查
+        console.log('vue3-sfc-loader 全局变量:', window['vue3-sfc-loader']);
+        console.log('loadModule 是否存在:', typeof loadModule === 'function');
+
+        // 示例组件代码 - Vue 3 组合式 API
+        const examples = {
+            hello: `<template>
+  <div class="hello-world">
+    <h2>{{ message }}</h2>
+    <el-button type="primary" @click="changeMessage">点击我</el-button>
+  </div>
+</template>
+
+<script setup>
+const message = ref('Hello Vue 3!');
+
+const changeMessage = () => {
+  message.value = '代码已更新！';
+}
+
+exports.message = message;
+exports.changeMessage = changeMessage;
+<\/script>
+
+<style scoped>
+.hello-world {
+  text-align: center;
+  padding: 20px;
+  color: #409eff;
+}
+</style>`
+        };
+
+        // 创建 Vue 3 应用
+        const { createApp, ref, onMounted, onBeforeUnmount } = Vue;
+        const app = createApp({
+            setup() {
+                const editor = ref(null);
+                const error = ref(null);
+                const isFullscreen = ref(false);
+                const editorContainer = ref(null);
+                const previewContainer = ref(null);
+
+                // 初始化编辑器
+                const initEditor = () => {
+                    editor.value = CodeMirror(editorContainer.value, {
+                        value: examples.hello,
+                        mode: 'vue',
+                        theme: 'monokai',
+                        lineNumbers: true,
+                        lineWrapping: true,
+                        tabSize: 2,
+                        autoCloseBrackets: true,
+                        matchBrackets: true
+                    });
+                };
+
+                // 修改 updatePreview 方法
+                const updatePreview = async () => {
+                    try {
+                        // 严格检查加载器方法
+                        if (typeof loadModule !== 'function') {
+                            throw new Error(
+                                'vue3-sfc-loader 未正确初始化，请检查：\n'
+                                + '1. 脚本是否加载成功\n'
+                                + '2. 控制台是否有网络错误\n'
+                                + '3. 是否使用最新版本\n'
+                                + `当前加载状态：${window['vue3-sfc-loader'] ? '已加载' : '未加载'}`
+                            );
+                        }
+
+                        error.value = null;
+                        const code = editor.value.getValue();
+
+                        // 清理旧实例
+                        previewContainer.value.innerHTML = '';
+
+                        // 修改加载器配置部分
+                        const options = {
+                            moduleCache: {
+                                vue: Vue,
+                                'element-plus': ElementPlus
+                            },
+                            async getFile(url) {
+                                // 处理 Element Plus 的组件级样式
+                                if (url.startsWith('element-plus/theme-chalk/')) {
+                                    const cssPath = url.replace('element-plus/', 'https://unpkg.com/element-plus/');
+                                    return await fetch(cssPath).then(r => r.text());
+                                }
+                                return code;
+                            },
+                            addStyle(textContent) {
+                                const style = document.createElement('style');
+                                style.textContent = textContent;
+                                style.setAttribute('data-dynamic', 'true');
+                                document.head.appendChild(style);
+                            },
+                            handleModule(type, getContentData) {
+                                if (type === '.css') {
+                                    this.addStyle(getContentData());
+                                }
+                            }
+                        };
+
+                        // 修改为直接使用导入的 loadModule
+                        const app = Vue.createApp(await loadModule('example.vue', options));
+
+                        // 挂载应用
+                        app.use(ElementPlus, {
+                            // size: 'small',
+                            zIndex: 3000
+                        });
+                        app.mount(previewContainer.value);
+
+                    } catch (err) {
+                        error.value = `编译错误: ${err.message.replace(/at.*/g, '')}`;
+                        console.error('完整错误堆栈:', err);
+                    }
+                };
+
+                // 重置编辑器
+                const resetEditor = () => {
+                    editor.value.setValue(examples.hello);
+                    updatePreview();
+                };
+
+                // 切换全屏
+                const toggleFullscreen = () => {
+                    isFullscreen.value = !isFullscreen.value;
+                };
+
+                // 监听 ESC 键
+                const handleEscKey = (e) => {
+                    if (e.key === 'Escape' && isFullscreen.value) {
+                        toggleFullscreen();
+                    }
+                };
+
+                onMounted(() => {
+                    initEditor();
+                    updatePreview();
+                    document.addEventListener('keydown', handleEscKey);
+                });
+
+                onBeforeUnmount(() => {
+                    document.removeEventListener('keydown', handleEscKey);
+                });
+
+                return {
+                    editorContainer,
+                    previewContainer,
+                    error,
+                    isFullscreen,
+                    updatePreview,
+                    resetEditor,
+                    toggleFullscreen
+                };
+            }
+        });
+
+        // 全局使用Element Plus
+        app.use(ElementPlus);
+
+        // 挂载应用
+        app.mount('#app');
+
+        // 添加样式加载调试
+        console.log('当前页面样式:',
+            Array.from(document.querySelectorAll('link, style'))
+                .filter(tag => tag.href?.includes('element-plus') ||
+                    tag.textContent?.includes('.el-'))
+                .map(tag => ({
+                    tag: tag.tagName,
+                    href: tag.href,
+                    content: tag.textContent?.substring(0, 100) + '...'
+                }))
+        );
+    </script>
+</body>
+
+</html>

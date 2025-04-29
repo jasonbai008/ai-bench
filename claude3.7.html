@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TRAE - 立即获取</title>
+  <style>
+    /* 全局样式 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+    }
+    
+    body {
+      background-color: #111215;
+      color: #fff;
+    }
+    
+    /* 导航栏样式 */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background-color: #111215;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo-icon {
+      width: 30px;
+      height: 30px;
+      background-color: #ff5a4c;
+      margin-right: 10px;
+    }
+    
+    .logo-text {
+      color: #fff;
+      font-weight: bold;
+      font-size: 20px;
+      letter-spacing: 1px;
+    }
+    
+    .nav-links {
+      display: flex;
+      align-items: center;
+    }
+    
+    .nav-links a {
+      color: #fff;
+      text-decoration: none;
+      margin-left: 20px;
+    }
+    
+    .login-btn {
+      background-color: #2a2a2a;
+      color: #fff;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    .download-btn {
+      background-color: #fff;
+      color: #000;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+    
+    /* 主要内容区域 */
+    .main-content {
+      text-align: center;
+      padding: 40px 20px;
+    }
+    
+    .title {
+      font-size: 40px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .title-text {
+      margin-right: 10px;
+    }
+    
+    /* TRAE 彩色标志 */
+    .title-logo {
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
+    
+    .title-logo span:nth-child(1) {
+      color: #ff5a4c;
+    }
+    
+    .title-logo span:nth-child(2) {
+      color: #ff5a4c;
+    }
+    
+    .title-logo span:nth-child(3) {
+      color: #ff758c;
+    }
+    
+    .title-logo span:nth-child(4) {
+      color: #a287ff;
+    }
+    
+    .subtitle {
+      color: #999;
+      font-size: 16px;
+      margin-bottom: 50px;
+    }
+    
+    /* 操作系统选择区域 */
+    .os-container {
+      display: flex;
+      justify-content: center;
+      max-width: 1000px;
+      margin: 0 auto;
+      background-color: #1a1b1f;
+      border-radius: 10px;
+      padding: 40px 20px;
+    }
+    
+    .os-card {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      position: relative;
+    }
+    
+    .os-card:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: 20%;
+      height: 60%;
+      width: 1px;
+      background-color: #333;
+    }
+    
+    .os-icon {
+      font-size: 50px;
+      margin-bottom: 20px;
+    }
+    
+    .os-name {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    
+    .os-version {
+      color: #999;
+      font-size: 14px;
+      margin-bottom: 30px;
+    }
+    
+    /* 下载按钮 */
+    .download-area {
+      display: flex;
+      margin-top: 20px;
+    }
+    
+    .download-btn-red {
+      background-color: #ff5a4c;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px 0 0 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    
+    .download-select {
+      background-color: rgba(255, 90, 76, 0.2);
+      color: #fff;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 0 4px 4px 0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+    
+    /* 手机号输入区域 */
+    .phone-input {
+      display: flex;
+      margin-top: 20px;
+    }
+    
+    .phone-prefix {
+      background-color: #2a2a2a;
+      color: #999;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px 0 0 4px;
+      font-size: 16px;
+    }
+    
+    .phone-number {
+      background-color: #2a2a2a;
+      color: #fff;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 0;
+      flex-grow: 1;
+      font-size: 16px;
+      width: 200px;
+    }
+    
+    .subscribe-btn {
+      background-color: #ff5a4c;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-left: 10px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <!-- 导航栏 -->
+  <nav class="navbar">
+    <div class="logo">
+      <!-- 红色方块logo -->
+      <div class="logo-icon"></div>
+      <div class="logo-text">TRAE</div>
+    </div>
+    <div class="nav-links">
+      <a href="#">文档</a>
+      <a href="#">社区</a>
+      <button class="login-btn">登录</button>
+      <button class="download-btn">立即下载</button>
+    </div>
+  </nav>
+
+  <!-- 主要内容区域 -->
+  <div class="main-content">
+    <h1 class="title">
+      <span class="title-text">立即获取</span>
+      <div class="title-logo">
+        <span>T</span><span>R</span><span>A</span><span>E</span>
+      </div>
+    </h1>
+    <p class="subtitle">出色的兼容性，全面适配主流操作系统</p>
+
+    <!-- 操作系统选择区域 -->
+    <div class="os-container">
+      <!-- Mac 系统 -->
+      <div class="os-card">
+        <div class="os-icon">
+          <svg viewBox="0 0 24 24" width="80" height="80" fill="#fff">
+            <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+          </svg>
+        </div>
+        <h2 class="os-name">Mac</h2>
+        <p class="os-version">macOS 10.15+</p>
+        <div class="download-area">
+          <button class="download-btn-red">下载</button>
+          <div class="download-select">
+            Apple 芯片版
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="#fff">
+              <path d="M7 10l5 5 5-5z"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Windows 系统 -->
+      <div class="os-card">
+        <div class="os-icon">
+          <svg viewBox="0 0 24 24" width="80" height="80" fill="#fff">
+            <path d="M3 12V6.75l6-1.32v6.48L3 12m17-9v8.75l-10 .15V5.21L20 3M3 13l6 .09v6.81l-6-1.15V13m17 .25V22l-10-1.91V13.1l10 .15z"/>
+          </svg>
+        </div>
+        <h2 class="os-name">Windows</h2>
+        <p class="os-version">Windows 10, 11</p>
+        <div class="download-area">
+          <button class="download-btn-red">下载</button>
+          <div class="download-select">
+            Windows x64 版
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="#fff">
+              <path d="M7 10l5 5 5-5z"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Linux 系统 -->
+      <div class="os-card">
+        <div class="os-icon">
+          <svg viewBox="0 0 24 24" width="80" height="80" fill="#fff">
+            <path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489.117.779.567 1.563 1.182 2.114.61.551 1.43.879 2.218.879 1.382 0 2.17-1.177 2.67-2.371h.272c.5 1.194 1.287 2.371 2.67 2.371.79 0 1.608-.328 2.218-.879.615-.551 1.065-1.335 1.182-2.114.123-.805-.008-1.657-.287-2.489-.589-1.771-1.832-3.47-2.716-4.521-.75-1.067-.974-1.928-1.05-3.02-.064-1.491 1.057-5.965-3.17-6.298-.165-.013-.325-.021-.48-.021zm-3.432 5.9c.24.005.474.096.66.271.184.176.287.407.283.646-.004.24-.115.464-.308.629-.19.166-.44.247-.683.247l-.153-.008c-.24-.03-.46-.15-.609-.334-.148-.181-.222-.412-.214-.65.016-.25.139-.479.34-.641.201-.161.46-.233.684-.16zm6.856 0c.223-.074.482-.002.684.16.2.162.324.391.34.641.008.238-.066.469-.214.65-.148.184-.369.304-.609.334l-.153.008c-.244 0-.493-.081-.683-.247-.193-.165-.304-.389-.308-.629-.004-.239.099-.47.283-.646.186-.175.42-.266.66-.271zm-3.512 1.583c-.227-.013-.454.071-.631.236-.177.165-.277.388-.277.625 0 .238.1.461.277.625.176.165.404.249.631.236.227.013.454-.071.631-.236.177-.164.277-.387.277-.625 0-.237-.1-.46-.277-.625-.176-.165-.404-.249-.631-.236zm1.828 1.344c-.501 0-.917.41-.917.917 0 .506.416.917.917.917.501 0 .917-.411.917-.917 0-.507-.416-.917-.917-.917zm-3.643.073c-.501 0-.917.41-.917.917 0 .506.416.917.917.917.501 0 .917-.411.917-.917 0-.507-.416-.917-.917-.917zm0 1.834c-.501 0-.917.41-.917.917 0 .506.416.917.917.917.501 0 .917-.411.917-.917 0-.507-.416-.917-.917-.917zm3.643 0c-.501 0-.917.41-.917.917 0 .506.416.917.917.917.501 0 .917-.411.917-.917 0-.507-.416-.917-.917-.917z"/>
+          </svg>
+        </div>
+        <h2 class="os-name">Linux</h2>
+        <p class="os-version">Linux 版本已开启预约<br>输入手机号订阅上线通知</p>
+        <div class="phone-input">
+          <div class="phone-prefix">+86</div>
+          <input type="text" class="phone-number" placeholder="输入手机号">
+          <button class="subscribe-btn">立即订阅</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

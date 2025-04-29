@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Vue 组件预览</title>
+  <!-- 引入 Vue -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+  
+  <!-- 引入 Element UI -->
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  
+  <!-- 引入 Vue 单文件组件加载器 -->
+  <script src="https://unpkg.com/http-vue-loader"></script>
+  
+  <style>
+    /* 这里可以放置全局样式 */
+    #app {
+      margin: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <!-- 使用组件 -->
+    <m-dropdown v-model="selectedValue" @change="handleChange"></m-dropdown>
+    <p>当前选中值: {{ selectedValue }}</p>
+  </div>
+
+  <script>
+    // 创建 Vue 实例
+    new Vue({
+      el: '#app',
+      // 通过 httpVueLoader 加载外部 .vue 文件
+      components: {
+        // 注意：这里引用的是相对路径下的 .vue 文件
+        'MDropdown': httpVueLoader('./MDropdown.vue')
+      },
+      data: {
+        selectedValue: ''
+      },
+      methods: {
+        handleChange(value) {
+          console.log('选中的值:', value);
+        }
+      }
+    });
+  </script>
+</body>
+</html> 

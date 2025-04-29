@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRAE 下载页面</title>
+    <style>
+        /* 全局样式 */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #0f0f0f;
+            color: #fff;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #1a1a1a;
+        }
+        .header img {
+            height: 40px;
+        }
+        .header nav a {
+            color: #fff;
+            margin-left: 20px;
+            text-decoration: none;
+        }
+        .header .buttons a {
+            margin-left: 10px;
+            padding: 10px 20px;
+            background-color: #333;
+            border-radius: 5px;
+            text-decoration: none;
+            color: #fff;
+        }
+        .header .buttons a.download {
+            background-color: #444;
+        }
+        .main {
+            text-align: center;
+            padding: 50px 20px;
+        }
+        .main h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+        .main p {
+            font-size: 16px;
+            color: #aaa;
+        }
+        .platforms {
+            display: flex;
+            justify-content: center;
+            margin-top: 50px;
+        }
+        .platform {
+            background-color: #1a1a1a;
+            margin: 0 10px;
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+            text-align: center;
+        }
+        .platform img {
+            height: 50px;
+            margin-bottom: 20px;
+        }
+        .platform h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .platform p {
+            font-size: 14px;
+            color: #aaa;
+            margin-bottom: 20px;
+        }
+        .platform .download-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background: linear-gradient(90deg, #ff4b2b, #ff416c);
+            border-radius: 5px;
+            color: #fff;
+            text-decoration: none;
+        }
+        .platform .input-group {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .platform .input-group input {
+            padding: 10px;
+            border: none;
+            border-radius: 5px 0 0 5px;
+            outline: none;
+        }
+        .platform .input-group button {
+            padding: 10px 20px;
+            background: linear-gradient(90deg, #ff4b2b, #ff416c);
+            border: none;
+            border-radius: 0 5px 5px 0;
+            color: #fff;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <img src="logo.png" alt="TRAE Logo">
+        <nav>
+            <a href="#">文档</a>
+            <a href="#">社区</a>
+        </nav>
+        <div class="buttons">
+            <a href="#" class="login">登录</a>
+            <a href="#" class="download">立即下载</a>
+        </div>
+    </header>
+    <main class="main">
+        <h1>立即获取 TRAE</h1>
+        <p>出色的兼容性，全面适配主流操作系统</p>
+        <div class="platforms">
+            <div class="platform">
+                <img src="mac.png" alt="Mac">
+                <h2>Mac</h2>
+                <p>macOS 10.15+</p>
+                <a href="#" class="download-button">下载 Apple 芯片版</a>
+            </div>
+            <div class="platform">
+                <img src="windows.png" alt="Windows">
+                <h2>Windows</h2>
+                <p>Windows 10, 11</p>
+                <a href="#" class="download-button">下载 Windows x64 版</a>
+            </div>
+            <div class="platform">
+                <img src="linux.png" alt="Linux">
+                <h2>Linux</h2>
+                <p>Linux 版本已开启预约<br>输入手机号订阅上线通知</p>
+                <div class="input-group">
+                    <input type="text" placeholder="+86 输入手机号">
+                    <button>立即订阅</button>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

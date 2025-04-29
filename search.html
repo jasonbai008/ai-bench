@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能搜索</title>
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Source Han Sans', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            width: 100%;
+            min-height: 100vh;
+            background-color: #FFFFFF;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* 背景图样式 */
+        .bg-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -2;
+            overflow: hidden;
+        }
+        
+        .bg-image {
+            width: 100%;
+            height: 100%;
+            background: url('https://image-resource-nc.mastergo.com/121498509150632/121498509150634/a850fc09b6720c93a63a5916a7f260df.png') no-repeat center center;
+            background-size: cover;
+        }
+        
+        .bg-gradient {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background: linear-gradient(180deg, rgba(240, 245, 253, 0) 0%, #F2F6FD 47%);
+        }
+        
+        /* 内容区域样式 */
+        .container {
+            width: 1280px;
+            margin: 0 auto;
+            padding-top: 34px;
+            position: relative;
+        }
+        
+        /* 标题样式 */
+        .search-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #3D3D3D;
+            margin-bottom: 38px;
+        }
+        
+        /* 搜索框样式 */
+        .search-box {
+            width: 1279px;
+            height: 63px;
+            background-color: #FFFFFF;
+            border: 1px solid #D8D8D8;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            margin-bottom: 57px;
+            box-shadow: none;
+        }
+        
+        .search-category {
+            display: flex;
+            align-items: center;
+            margin-left: 19px;
+            margin-right: 20px;
+        }
+        
+        .search-category-text {
+            color: #999999;
+            font-size: 16px;
+        }
+        
+        .search-category-icon {
+            margin-left: 5px;
+        }
+        
+        .search-divider {
+            width: 1px;
+            height: 22px;
+            background-color: #D8D8D8;
+            margin: 0 20px;
+        }
+        
+        .search-input {
+            flex: 1;
+            height: 100%;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            color: #1A1A1A;
+            background-color: transparent;
+        }
+        
+        .search-input::placeholder {
+            color: #999999;
+        }
+        
+        .search-camera {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 29px;
+        }
+        
+        .search-button {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(134deg, #3165F0 2%, #19499D 100%);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            cursor: pointer;
+        }
+        
+        /* 热门关键词样式 */
+        .keywords-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #1A1A1A;
+            margin-bottom: 22px;
+        }
+        
+        .keywords-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 17px;
+            margin-bottom: 52px;
+        }
+        
+        .keyword-item {
+            height: 36px;
+            background-color: #E8E8E8;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            cursor: pointer;
+        }
+        
+        .keyword-text {
+            font-size: 16px;
+            color: #1A1A1A;
+            white-space: nowrap;
+        }
+        
+        .keyword-arrow {
+            margin-left: 5px;
+        }
+        
+        /* 热门专题样式 */
+        .topics-container {
+            margin-top: 30px;
+        }
+        
+        .topics-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #3D3D3D;
+            margin-bottom: 29px;
+        }
+        
+        .topics-list {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .topic-item {
+            width: 293px;
+            height: 159px;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .topic-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <!-- 背景区域 -->
+    <div class="bg-container">
+        <div class="bg-image"></div>
+        <div class="bg-gradient"></div>
+    </div>
+    
+    <!-- 内容区域 -->
+    <div class="container">
+        <!-- 标题 -->
+        <h1 class="search-title">智能搜索</h1>
+        
+        <!-- 搜索框 -->
+        <div class="search-box">
+            <!-- 分类选择 -->
+            <div class="search-category">
+                <span class="search-category-text">全部</span>
+                <div class="search-category-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4 10L8 14L12 10" fill="#D8D8D8"/>
+                    </svg>
+                </div>
+            </div>
+            
+            <!-- 分隔线 -->
+            <div class="search-divider"></div>
+            
+            <!-- 输入框 -->
+            <input type="text" class="search-input" placeholder="请输入关键词或描述文字">
+            
+            <!-- 拍照按钮 -->
+            <div class="search-camera">
+                <svg width="34" height="31" viewBox="0 0 34 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7.19167 5L8.10167 2.05542C8.47933 0.833379 9.6092 5.08626e-07 10.8883 0L22.445 0C23.7241 -2.44141e-05 24.854 0.833355 25.2317 2.05542L26.1417 5L28.75 5C31.2812 5 33.3333 7.05208 33.3333 9.58333L33.3333 26.25C33.3333 28.7812 31.2812 30.8333 28.75 30.8333L4.58333 30.8333C2.05208 30.8333 0 28.7812 0 26.25L0 9.58333C0 7.05208 2.05208 5 4.58333 5L7.19167 5ZM8.11375 7.5L4.58333 7.5C3.43274 7.5 2.5 8.43274 2.5 9.58333L2.5 26.25C2.5 27.4006 3.43274 28.3333 4.58333 28.3333L28.75 28.3333C29.9006 28.3333 30.8333 27.4006 30.8333 26.25L30.8333 9.58333C30.8333 8.43274 29.9006 7.5 28.75 7.5L25.2196 7.5C24.6715 7.49997 24.1873 7.14284 24.0254 6.61917L22.8429 2.79375C22.789 2.61919 22.6277 2.50009 22.445 2.5L10.8883 2.5C10.7056 2.50009 10.5443 2.61919 10.4904 2.79375L9.30792 6.61875C9.14606 7.14268 8.66187 7.5 8.11375 7.5ZM16.6667 23.3333C13.215 23.3333 10.4167 20.535 10.4167 17.0833C10.4167 13.6317 13.215 10.8333 16.6667 10.8333C20.1183 10.8333 22.9167 13.6317 22.9167 17.0833C22.9167 20.535 20.1183 23.3333 16.6667 23.3333ZM16.6667 20.8333C18.7377 20.8333 20.4167 19.1544 20.4167 17.0833C20.4167 15.0123 18.7377 13.3333 16.6667 13.3333C14.5956 13.3333 12.9167 15.0123 12.9167 17.0833C12.9167 19.1544 14.5956 20.8333 16.6667 20.8333Z" fill="#305DDF"/>
+                </svg>
+            </div>
+            
+            <!-- 搜索按钮 -->
+            <div class="search-button">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6.93065 0.7595C6.80074 0.649576 6.61487 0.553644 6.47697 0.541652L1.62836 0.00202993C1.17868 -0.027949 0.830919 0.277837 0.78695 0.675558C0.74298 1.07128 1.06276 1.473 1.46048 1.51697L4.73219 1.88271L0.223344 6.38956C-0.0744476 6.68735 -0.0744476 7.16901 0.223344 7.4668C0.521135 7.7646 1.0028 7.7646 1.30059 7.4668L5.80744 2.95996L6.17118 6.23167C6.21515 6.62739 6.61487 6.93518 7.01259 6.9052C7.44429 6.87322 7.73009 6.45951 7.68612 6.06379L7.1465 1.21518C7.13051 1.01132 7.07255 0.905399 6.93065 0.7595Z" fill="white"/>
+                    <path d="M2.88772 0.26452C2.97085 0.102148 3.13791 0 3.32032 0C3.50274 0 3.66979 0.102148 3.75292 0.26452L3.85612 0.464921C4.36694 1.4594 5.17644 2.2689 6.17092 2.77972L6.36772 2.88772C6.53009 2.97085 6.63224 3.13791 6.63224 3.32032C6.63224 3.50274 6.53009 3.66979 6.36772 3.75292L6.16732 3.85612C5.17196 4.36457 4.36081 5.17195 3.84772 6.16492L3.74452 6.36532C3.66139 6.5277 3.49434 6.62984 3.31192 6.62984C3.1295 6.62984 2.96245 6.5277 2.87932 6.36532L2.77612 6.16492C2.26664 5.17009 1.45843 4.35978 0.464921 3.84772L0.26452 3.74452C0.102148 3.66139 0 3.49434 0 3.31192C0 3.12951 0.102148 2.96245 0.26452 2.87932L0.464921 2.77612C1.4594 2.2653 2.2689 1.4558 2.77972 0.461322L2.88772 0.26452Z" fill="white"/>
+                </svg>
+            </div>
+        </div>
+        
+        <!-- 热门关键词 -->
+        <div class="keywords-container">
+            <h2 class="keywords-title">热门关键词</h2>
+            <div class="keywords-list">
+                <!-- 关键词项 -->
+                <div class="keyword-item" style="width: 166px;">
+                    <span class="keyword-text">航空航天专业</span>
+                    <div class="keyword-arrow">
+                        <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6.93065 0.7595C6.80074 0.649576 6.61487 0.553644 6.47697 0.541652L1.62836 0.00202993C1.17868 -0.027949 0.830919 0.277837 0.78695 0.675558C0.74298 1.07128 1.06276 1.473 1.46048 1.51697L4.73219 1.88271L0.223344 6.38956C-0.0744476 6.68735 -0.0744476 7.16901 0.223344 7.4668C0.521135 7.7646 1.0028 7.7646 1.30059 7.4668L5.80744 2.95996L6.17118 6.23167C6.21515 6.62739 6.61487 6.93518 7.01259 6.9052C7.44429 6.87322 7.73009 6.45951 7.68612 6.06379L7.1465 1.21518C7.13051 1.01132 7.07255 0.905399 6.93065 0.7595Z" fill="#1A1A1A"/>
+                        </svg>
+                    </div>
+                </div>
+                
+                <div class="keyword-item" style="width: 135px;">
+                    <span class="keyword-text">高等数学</span>
+                    <div class="keyword-arrow">
+                        <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6.93065 0.7595C6.80074 0.649576 6.61487 0.553644 6.47697 0.541652L1.62836 0.00202993C1.17868 -0.027949 0.830919 0.277837 0.78695 0.675558C0.74298 1.07128 1.06276 1.473 1.46048 1.51697L4.73219 1.88271L0.223344 6.38956C-0.0744476 6.68735 -0.0744476 7.16901 0.223344 7.4668C0.521135 7.7646 1.0028 7.7646 1.30059 7.4668L5.80744 2.95996L6.17118 6.23167C6.21515 6.62739 6.61487 6.93518 7.01259 6.9052C7.44429 6.87322 7.73009 6.45951 7.68612 6.06379L7.1465 1.21518C7.13051 1.01132 7.07255 0.905399 6.93065 0.7595Z" fill="#1A1A1A"/>
+                        </svg>
+                    </div>
+                </div>
+                
+                <div class="keyword-item" style="width: 151px;">
+                    <span class="keyword-text">101系列课程</span>
+                    <div class="keyword-arrow">
+                        <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6.93065 0.7595C6.80074 0.649576 6.61487 0.553644 6.47697 0.541652L1.62836 0.00202993C1.17868 -0.027949 0.830919 0.277837 0.78695 0.675558C0.74298 1.07128 1.06276 1.473 1.46048 1.51697L4.73219 1.88271L0.223344 6.38956C-0.0744476 6.68735 -0.0744476 7.16901 0.223344 7.4668C0.521135 7.7646 1.0028 7.7646 1.30059 7.4668L5.80744 2.95996L6.17118 6.23167C6.21515 6.62739 6.61487 6.93518 7.01259 6.9052C7.44429 6.87322 7.73009 6.45951 7.68612 6.06379L7.1465 1.21518C7.13051 1.01132 7.07255 0.905399 6.93065 0.7595Z" fill="#1A1A1A"/>
+                        </svg>
+                    </div>
+                </div>
+                
+                <div class="keyword-item" style="width: 166px;">
+                    <span class="keyword-text">航空航天专业</span>
+                    <div class="keyword-arrow">
+                        <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6.93065 0.7595C6.80074 0.649576 6.61487 0.553644 6.47697 0.541652L1.62836 0.00202993C1.17868 -0.027949 0.830919 0.277837 0.78695 0.675558C0.74298 1.07128 1.06276 1.473 1.46048 1.51697L4.73219 1.88271L0.223344 6.38956C-0.0744476 6.68735 -0.0744476 7.16901 0.223344 7.4668C0.521135 7.7646 1.0028 7.7646 1.30059 7.4668L5.80744 2.95996L6.17118 6.23167C6.21515 6.62739 6.61487 6.93518 7.01259 6.9052C7.44429 6.87322 7.73009 6.45951 7.68612 6.06379L7.1465 1.21518C7.13051 1.01132 7.07255 0.905399 6.93065 0.7595Z" fill="#1A1A1A"/>
+                        </svg>
+                    </div>
+                </div>
+                
+                <div class="keyword-item" style="width: 135px;">
+                    <span class="keyword-text">高等数学</span>
+                    <div class="keyword-arrow">
+                        <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6.93065 0.7595C6.80074 0.649576 6.61487 0.553644 6.47697 0.541652L1.62836 0.00202993C1.17868 -0.027949 0.830919 0.277837 0.78695 0.675558C0.74298 1.07128 1.06276 1.473 1.46048 1.51697L4.73219 1.88271L0.223344 6.38956C-0.0744476 6.68735 -0.0744476 7.16901 0.223344 7.4668C0.521135 7.7646 1.0028 7.7646 1.30059 7.4668L5.80744 2.95996L6.17118 6.23167C6.21515 6.62739 6.61487 6.93518 7.01259 6.9052C7.44429 6.87322 7.73009 6.45951 7.68612 6.06379L7.1465 1.21518C7.13051 1.01132 7.07255 0.905399 6.93065 0.7595Z" fill="#1A1A1A"/>
+                        </svg>
+                    </div>
+                </div>
+                
+                <div class="keyword-item" style="width: 131px;">
+                    <span class="keyword-text">大学物理</span>
+                    <div class="keyword-arrow">
+                        <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6.93065 0.7595C6.80074 0.649576 6.61487 0.553644 6.47697 0.541652L1.62836 0.00202993C1.17868 -0.027949 0.830919 0.277837 0.78695 0.675558C0.74298 1.07128 1.06276 1.473 1.46048 1.51697L4.73219 1.88271L0.223344 6.38956C-0.0744476 6.68735 -0.0744476 7.16901 0.223344 7.4668C0.521135 7.7646 1.0028 7.7646 1.30059 7.4668L5.80744 2.95996L6.17118 6.23167C6.21515 6.62739 6.61487 6.93518 7.01259 6.9052C7.44429 6.87322 7.73009 6.45951 7.68612 6.06379L7.1465 1.21518C7.13051 1.01132 7.07255 0.905399 6.93065 0.7595Z" fill="#1A1A1A"/>
+                        </svg>
+                    </div>
+                </div>
+                
+                <div class="keyword-item" style="width: 287px;">
+                    <span class="keyword-text">战略性新兴领域"十四五"教材</span>
+                    <div class="keyword-arrow">
+                        <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6.93065 0.7595C6.80074 0.649576 6.61487 0.553644 6.47697 0.541652L1.62836 0.00202993C1.17868 -0.027949 0.830919 0.277837 0.78695 0.675558C0.74298 1.07128 1.06276 1.473 1.46048 1.51697L4.73219 1.88271L0.223344 6.38956C-0.0744476 6.68735 -0.0744476 7.16901 0.223344 7.4668C0.521135 7.7646 1.0028 7.7646 1.30059 7.4668L5.80744 2.95996L6.17118 6.23167C6.21515 6.62739 6.61487 6.93518 7.01259 6.9052C7.44429 6.87322 7.73009 6.45951 7.68612 6.06379L7.1465 1.21518C7.13051 1.01132 7.07255 0.905399 6.93065 0.7595Z" fill="#1A1A1A"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 热门专题 -->
+        <div class="topics-container">
+            <h2 class="topics-title">热门专题</h2>
+            <div class="topics-list">
+                <!-- 专题项 -->
+                <div class="topic-item">
+                    <img src="https://image-resource-nc.mastergo.com/121498509150632/121498509150634/e07df6715bb3c0e56c5956b95cc6a220.jpg" class="topic-image" alt="热门专题1">
+                </div>
+                
+                <div class="topic-item">
+                    <img src="https://image-resource-nc.mastergo.com/121498509150632/121498509150634/5be2e9625de0e386fac561fac60450c7.jpg" class="topic-image" alt="热门专题2">
+                </div>
+                
+                <div class="topic-item">
+                    <img src="https://image-resource-nc.mastergo.com/121498509150632/121498509150634/6276d4d033ae1e96142da11e432fe6ea.png" class="topic-image" alt="热门专题3">
+                </div>
+                
+                <div class="topic-item">
+                    <img src="https://image-resource-nc.mastergo.com/121498509150632/121498509150634/54b5d7abb0dad6ec46298c114b78adf1.jpg" class="topic-image" alt="热门专题4">
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 搜索功能实现
+        document.querySelector('.search-button').addEventListener('click', function() {
+            const searchInput = document.querySelector('.search-input').value;
+            if (searchInput.trim() !== '') {
+                // 这里可以实现搜索逻辑
+                console.log('搜索内容:', searchInput);
+                // alert('执行搜索: ' + searchInput);
+            }
+        });
+        
+        // 按回车键搜索
+        document.querySelector('.search-input').addEventListener('keyup', function(event) {
+            if (event.key === 'Enter') {
+                document.querySelector('.search-button').click();
+            }
+        });
+        
+        // 关键词点击事件
+        document.querySelectorAll('.keyword-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const keyword = this.querySelector('.keyword-text').textContent;
+                document.querySelector('.search-input').value = keyword;
+                document.querySelector('.search-button').click();
+            });
+        });
+    </script>
+</body>
+</html>

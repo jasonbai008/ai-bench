@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>版权信息</title>
+    <style>
+        /* 主色蓝 */
+        :root {
+            --primary-blue: #305DDF;
+            --border-color: #D8D8D8;
+            --text-dark: #3D3D3D;
+            --text-gray: #666666;
+            --text-light-gray: #999999;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: "Source Han Sans", sans-serif;
+        }
+
+        /* 版权信息容器 */
+        .copyright-container {
+            width: 321px;
+            height: 587px;
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* 蓝色装饰条 */
+        .blue-bar {
+            width: 4px;
+            height: 15px;
+            background-color: var(--primary-blue);
+            position: absolute;
+            left: 24px;
+            top: 24px;
+        }
+
+        /* 标题样式 */
+        .title {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-left: 20px;
+            line-height: 26px;
+        }
+
+        /* 更多按钮 */
+        .more {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 12px;
+            color: var(--text-light-gray);
+            line-height: 26px;
+        }
+
+        /* 内容区域 */
+        .content {
+            margin-top: 30px;
+            font-size: 14px;
+            line-height: 27px;
+            width: 253px;
+        }
+
+        .content .label {
+            color: var(--text-light-gray);
+        }
+
+        .content .value {
+            color: var(--text-gray);
+        }
+
+        .content .declaration {
+            color: var(--text-gray);
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="copyright-container">
+        <div class="blue-bar"></div>
+        <h1 class="title">版权信息</h1>
+        <div class="more">更多</div>
+        <div class="content">
+            <p><span class="label">作品名称：</span><span class="value">车联网技术及应用</span></p>
+            <p><span class="label">ISBN：</span><span class="value">978-7-89530-723-0</span></p>
+            <p><span class="label">出版单位：</span><span class="value">高等教育电子音像出版社</span></p>
+            <p><span class="label">出版时间：</span><span class="value">2022年12月31日</span></p>
+            <p><span class="label">更新时间：</span><span class="value">2022年12月31日</span></p>
+            <p><span class="label">主编：</span><span class="value">向怀坤 王静</span></p>
+            <p><span class="label">副主编：</span><span class="value">赵建峰 向利娟 朱红梅 郭文莲</span></p>
+            <p><span class="label">参编：</span><span class="value">孔祥喜</span></p>
+            <p><span class="label">郑重声明：</span></p>
+            <p class="declaration">高等教育电子音像出版社依法对本数字教材享有专有的信息网络传播权、复制权、发行权等权利。任何不属于合理使用的、未经许可的对本数字教材全部或部分的复制、传播、销售等使用行为均属违法，行为人将承担相应的民事、行政或刑事责任。如发现前述侵权行为，希望及时举报，我社将配合行政执法部门和司法机关对违法犯罪行为进行严厉打击。侵权举报电话：（010）58581999。</p>
+        </div>
+    </div>
+</body>
+</html>

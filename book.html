@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turn.js 电子书示例</title>
+    <!-- 引入jQuery (turn.js依赖jQuery) -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- 引入turn.js -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/turn.js/3/turn.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            font-family: 'Microsoft YaHei', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* 书本容器样式 */
+        #book-container {
+            width: 400px;
+            height: 600px;
+            position: relative;
+        }
+
+        /* 书本样式 */
+        #book {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* 页面样式 */
+        .page {
+            background-color: white;
+            padding: 15px;
+            box-sizing: border-box;
+            border-radius: 0 5px 5px 0;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* 页面内容样式 */
+        .page-content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+        }
+
+        /* 页面标题样式 */
+        .page-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        /* 页面段落样式 */
+        .page-text {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #555;
+            text-align: justify;
+        }
+
+        /* 翻页按钮样式 */
+        .btn-container {
+            position: absolute;
+            bottom: -50px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .btn {
+            padding: 8px 15px;
+            background-color: #4a89dc;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #3b6fc1;
+        }
+    </style>
+</head>
+<body>
+    <div id="book-container">
+        <!-- 书本 -->
+        <div id="book">
+            <!-- 第1页 -->
+            <div class="page">
+                <div class="page-content">
+                    <h2 class="page-title">第一章：引言</h2>
+                    <p class="page-text">这是第一页的内容。在这里，我们将介绍这本书的主要内容和结构。这本书旨在探讨现代科技的发展趋势以及它们对我们日常生活的影响。</p>
+                    <p class="page-text">随着人工智能、大数据和物联网技术的快速发展，我们的社会正在经历前所未有的变革。这些技术不仅改变了我们的工作方式，也深刻地影响了我们的生活方式和思维方式。</p>
+                    <p class="page-text">在接下来的章节中，我们将深入探讨这些技术的发展历程、现状以及未来可能的发展方向。我们还将分析这些技术带来的机遇和挑战，以及如何应对这些挑战。</p>
+                </div>
+            </div>
+            
+            <!-- 第2页 -->
+            <div class="page">
+                <div class="page-content">
+                    <h2 class="page-title">第二章：技术发展</h2>
+                    <p class="page-text">这是第二页的内容。在本章中，我们将详细讨论现代科技的发展历程和现状。从最初的机械计算机到现代的量子计算机，计算技术已经经历了翻天覆地的变化。</p>
+                    <p class="page-text">同时，互联网技术的发展也极大地改变了信息传播的方式。从最初的ARPANET到现在的5G网络，互联网已经成为我们生活中不可或缺的一部分。</p>
+                    <p class="page-text">此外，人工智能技术的发展也取得了巨大的进步。从最初的专家系统到现在的深度学习，人工智能已经在图像识别、自然语言处理等领域取得了超越人类的成就。</p>
+                </div>
+            </div>
+            
+            <!-- 第3页 -->
+            <div class="page">
+                <div class="page-content">
+                    <h2 class="page-title">第三章：未来展望</h2>
+                    <p class="page-text">这是第三页的内容。在本章中，我们将展望未来科技的发展方向和可能带来的影响。随着技术的不断发展，我们可能会看到更多令人惊叹的创新。</p>
+                    <p class="page-text">例如，量子计算可能会彻底改变我们解决复杂问题的方式；脑机接口可能会为残疾人带来新的希望；基因编辑技术可能会帮助我们治愈许多目前无法治愈的疾病。</p>
+                    <p class="page-text">然而，这些技术也带来了许多伦理和社会问题。我们需要认真思考如何确保这些技术的发展方向符合人类的共同利益，如何防止这些技术被滥用，以及如何应对这些技术可能带来的社会变革。</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 翻页按钮 -->
+        <div class="btn-container">
+            <button class="btn" id="prev">上一页</button>
+            <button class="btn" id="next">下一页</button>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // 初始化turn.js
+            $('#book').turn({
+                // 只显示单页（右侧页面）
+                display: 'single',
+                // 确保始终显示右侧页面
+                page: 1,
+                // 设置翻页方向为右到左
+                direction: 'ltr',
+                // 设置翻页动画时间
+                duration: 1000,
+                // 设置翻页时的渐变效果
+                gradients: true,
+                // 设置自动调整大小
+                autoCenter: true,
+                // 设置翻页时的阴影效果
+                elevation: 50,
+                // 启用右下角翻页
+                corner: ['r'],
+                // 设置翻页区域大小
+                cornerSize: 100,
+                // 当窗口大小改变时，自动调整书本大小
+                when: {
+                    turning: function(event, page, view) {
+                        console.log('正在翻到第' + page + '页');
+                    },
+                    turned: function(event, page, view) {
+                        console.log('已翻到第' + page + '页');
+                    }
+                }
+            });
+
+            // 绑定上一页按钮事件
+            $('#prev').click(function() {
+                $('#book').turn('previous');
+            });
+
+            // 绑定下一页按钮事件
+            $('#next').click(function() {
+                $('#book').turn('next');
+            });
+        });
+    </script>
+</body>
+</html>
